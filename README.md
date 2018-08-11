@@ -24,23 +24,23 @@ The minimum requirement by this project template that your Web server supports P
 INSTALAÇÃO
 ------------
 
-### Primeiro
+### 1º Passo
 
 ```php
     composer update
 ```
 
-### Segundo
+### 2º Passo
 
 ```php
     php yii migrate
 ```
-### Terceiro
+### 3º Passo
 ```php
     ./yii init-data-base
 ```
 
-You can then access the application through the following URL:
+Como acessar:
 
 ~~~
 http://localhost/[pasta-app]/web/
@@ -52,7 +52,7 @@ CONFIGURAÇÃO
 
 ### Banco de dados
 
-Edit the file `config/db.php` with real data, for example:
+Editar o arquivo `config/db.php` para conectar com o banco de dados:
 
 ```php
 return [
