@@ -14,6 +14,7 @@ use Yii;
  * @property string $comentario
  * @property int $idestado
  * @property int $idpedido
+ * @property string $telefone
  *
  * @property Estados $estado
  * @property Pedidos $pedido
@@ -40,6 +41,7 @@ class DadosEnvio extends \yii\db\ActiveRecord
             [['cnpj'], 'string', 'max' => 14],
             [['endereco'], 'string', 'max' => 255],
             [['cep'], 'string', 'max' => 9],
+            [['telefone'], 'string', 'max' => 11],
             [['idestado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['idestado' => 'idestado']],
             [['idpedido'], 'exist', 'skipOnError' => true, 'targetClass' => Pedidos::className(), 'targetAttribute' => ['idpedido' => 'idpedido']],
         ];
@@ -58,6 +60,7 @@ class DadosEnvio extends \yii\db\ActiveRecord
             'comentario' => 'Comentario',
             'idestado' => 'Idestado',
             'idpedido' => 'Idpedido',
+            'telefone' => 'Telefone',
         ];
     }
 

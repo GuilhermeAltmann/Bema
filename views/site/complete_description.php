@@ -1,3 +1,6 @@
+<?php
+$dataEmissaoNfe = \Yii::$app->formatter->asDate($pedido->data_hora_emissao_nfe, 'php:d/m/Y H:i:s');
+?>
 <div class="row">
     <div class="col s12">
         <ul class="collection with-header">
@@ -48,7 +51,7 @@
             </tr>
             <tr>
                 <td>Telefone para Envio</td>
-                <td><?=$pedido->dadosEnvios->cnpj?></td>
+                <td><?=$pedido->dadosEnvios->telefone?></td>
             </tr>
             <tr>
                 <td>CEP para Envio</td>
@@ -72,11 +75,11 @@
             </tr>
             <tr>
                 <td>NFe Número</td>
-                <td></td>
+                <td><?= $pedido->numero_nfe?></td>
             </tr>
             <tr>
                 <td>Data Emissão NFe</td>
-                <td></td>
+                <td><?= $dataEmissaoNfe != '<span class="not-set">(not set)</span>' ? $dataEmissaoNfe : '' ?></td>
             </tr>
         </table>
     </div>
@@ -85,10 +88,12 @@
     <div class="col s12">
         <b class="with-text-item">Histórico de Pedidos</b>
         <table class="striped">
+        <?php foreach ($pedido->historicosPedidos as $historico):?>
             <tr>
-                <td>12/04/2018 08:29:01</td>
-                <td>Novo pedido foi submetido</td>
+                <td><?= \Yii::$app->formatter->asDate($historico->data_hora, 'php:d/m/Y H:i:s')?></td>
+                <td><?=$historico->status->descricao?></td>
             </tr>
+        <?php endforeach;?>
         </table>
     </div>
 </div>
