@@ -1,10 +1,4 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
-
 namespace app\commands;
 
 use yii\console\Controller;
@@ -13,19 +7,23 @@ use Faker\Factory;
 use app\models\Paises;
 use app\models\Estados;
 use app\models\Status;
+use app\models\Itens;
+use app\models\Kits;
+use app\models\Pedidos;
+use app\models\DadosEnvio;
+use app\models\HistoricosPedido;
+
+use yii\db\Expression;
 
 /**
  * @author Guilherme Altmann
- * @since 2.0
+ * @since 1.0
  */
+
 class InitDataBaseController extends Controller
 {
     private $faker;
-    /**
-     * This command echoes what you have entered as the message.
-     * @param string $message the message to be echoed.
-     * @return int Exit code
-     */
+
     public function actionIndex()
     {
         $this->faker = Factory::create('pt_BR');
@@ -44,18 +42,34 @@ class InitDataBaseController extends Controller
             $this->criarEstados($brasil);
         }
 
-        $statuses = ['Em Revisão', 'Faturado', 'Novo'];
+        $statuses = ['Em Revisão', 'Faturado', 'Novo', 'NFe Gerada'];
 
         foreach($statuses as $status){
 
             $this->criarStatus($status);
         }
 
-        $itens[] = ['Tablet samsung tab e 9.6', 'tab-e-image.webp'];
-        //$itens[] = ['Tablet samsung tab e 9.6', 'tab-e-image.webp'];
-        foreach($items as $item){
-            
+        $kit = $this->criarKit();
 
+        $itens[] = ['descricao' => 'Tablet samsung tab e 9.6',
+                    'imagem' => 'tab-e-image.webp',
+                    'kit' => $kit];
+        $itens[] = ['descricao' => 'Suporte metalico tablet', 
+                    'imagem' => 'tab-suporte.jpg',
+                    'kit' => $kit];
+
+        foreach($itens as $item){
+            
+            $itensCriados[] = $this->criarItem($item);
+        }
+
+        for ($i=0; $i < 4; $i++) {
+
+            $this->criarPedido($kit, 
+                                Status::find()
+                                ->where(['descricao' => $statuses[2]])
+                                ->one()
+                            );
         }
 
         return ExitCode::OK;
@@ -84,7 +98,9 @@ class InitDataBaseController extends Controller
 
         $pais = 'Brasil';
 
-        if(!Paises::find()->where(['descricao' => $pais])->one()){
+        $brasil = Paises::find()->where(['descricao' => $pais])->one();
+
+        if(!$brasil){
 
             $brasil = $this->criarPais($pais);
         }
@@ -108,10 +124,14 @@ class InitDataBaseController extends Controller
 
     private function apagarDadosTabelas(){
 
+        Itens::deleteAll();
+        DadosEnvio::deleteAll();
+        Pedidos::deleteAll();
+        Kits::deleteAll();
+        Status::deleteAll();
+        HistoricosPedido::deleteAll();
         Estados::deleteAll();
         Paises::deleteAll();
-        Status::deleteAll();
-        Itens::deleteAll();
     }
 
     private function criarStatus($nomeStatus){
@@ -119,5 +139,73 @@ class InitDataBaseController extends Controller
         $status = new Status();
         $status->descricao = $nomeStatus;
         $status->save();
+    }
+
+    private function criarItem($item){
+
+        $itens = new Itens();
+        $itens->descricao = $item['descricao'];
+        $itens->imagem = $item['descricao'];
+        $itens->idkit = $item['kit']->idkit;
+        $itens->save();
+        
+        return $itens;
+    }
+
+    private function criarKit(){
+
+        $kit = new Kits();
+        $kit->descricao = 'Bemacash Bar e Restaurante NFC-e';
+        $kit->save();
+        return $kit;
+    }
+
+    private function criarPedido($kit, $status){
+
+        $pedido = new Pedidos();
+        $pedido->contrato_licenca = $this->faker->ipv4;
+        $pedido->preco = $this->faker->randomFloat(NULL, 100, 400);
+        $pedido->idkit = $kit->idkit;
+        $pedido->idstatus = $status->idstatus;
+        $pedido->save();
+
+        $this->criarDadosEnvio($pedido);
+        $this->criarHistoricoPedido($pedido);
+        $this->criarHistoricoPedido($pedido, 'Em Revisão');
+    }
+
+    private function criarDadosEnvio($pedido)
+    {
+
+        $dadosEnvio = new DadosEnvio();
+        $dadosEnvio->cnpj = $this->faker->cnpj(false);
+        $dadosEnvio->endereco = $this->faker->address;
+        $dadosEnvio->cep = $this->faker->postcode;
+        $dadosEnvio->idestado = $this->pegarEstadoAleatorio()->idestado;
+        $dadosEnvio->idpedido = $pedido->idpedido;
+        $dadosEnvio->save();
+    }
+
+    private function pegarEstadoAleatorio(){
+
+        return Estados::find()
+                ->orderBy(new Expression('rand()'))
+                ->one();
+    }
+
+    private function criarHistoricoPedido($pedido, $status = 'Novo')
+    {
+
+        $historicoPedido = new HistoricosPedido();
+        $historicoPedido->idpedido = $pedido->idpedido;
+        $historicoPedido->idstatus = $this->pegarStatus($status)->idstatus;
+        $historicoPedido->save();
+    }
+
+    private function pegarStatus($descricao){
+
+        return Status::find()
+                ->where(['descricao' => $descricao])
+                ->one();
     }
 }
