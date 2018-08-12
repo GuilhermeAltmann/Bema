@@ -21,13 +21,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
         $pedidos = Pedidos::find()->all();
         return $this->render('index', ['pedidos' => $pedidos]);
     }
 
     public function actionDescricaocompleta()
     {
+        $this->layout = false;
+        
+        $idpedido =\Yii::$app->request->get('idpedido');
+        $pedido = Pedidos::findOne(['idpedido' => $idpedido]);
 
-        return "lalalallala<br>asdsa";
+        return $this->render('complete_description', ['pedido' => $pedido]);
     }
 }

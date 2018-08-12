@@ -2,13 +2,15 @@
     <div class="col s12">
         <ul class="collection with-header">
             <li class="collection-header">
-                <h6>BEMACASH BAR E RESTAURANTE</h6>
+                <h6><?php $pedido->kit->descricao ?></h6>
             </li>
-            <li class="collection-item">
-                <img src="images/tab-e-image.webp" alt="" class="img-item circle"> 
-                <span class="new badge badge-item" data-badge-caption="itens">3</span>
-                <span class="text-item">Tablet samsung tab e 9.6</span>
-            </li>
+            <?php foreach ($pedido->kit->itens as $item):?>
+                <li class="collection-item">
+                    <img src="images/<?=$item->imagem?>" alt="" class="img-item circle"> 
+                    <span class="new badge badge-item" data-badge-caption="itens">1</span>
+                    <span class="text-item"><?=$item->descricao?></span>
+                </li>
+            <?php endforeach;?>
         </ul>
     </div>
 </div>
@@ -19,7 +21,7 @@
 </div>
 <div class="row">
     <div class="col s12">
-        <table class="responsive-table striped">
+        <table class="striped">
             <tr>
                 <td>Contrato de Licença</td>
                 <td>177.188.12.10</td>
@@ -82,7 +84,7 @@
 <div class="row">
     <div class="col s12">
         <b class="with-text-item">Histórico de Pedidos</b>
-        <table class="responsive-table striped">
+        <table class="striped">
             <tr>
                 <td>12/04/2018 08:29:01</td>
                 <td>Novo pedido foi submetido</td>

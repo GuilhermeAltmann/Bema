@@ -145,7 +145,7 @@ class InitDataBaseController extends Controller
 
         $itens = new Itens();
         $itens->descricao = $item['descricao'];
-        $itens->imagem = $item['descricao'];
+        $itens->imagem = $item['imagem'];
         $itens->idkit = $item['kit']->idkit;
         $itens->save();
         
