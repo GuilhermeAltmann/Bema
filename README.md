@@ -63,5 +63,16 @@ Como acessar:
 http://localhost/[pasta-app]/web/
 ~~~
 
+Ou use o comando:
+
+```php
+    ./yii serve
+```
+
+E acesse pela url gerada, url padrão:
+
+~~~
+http://localhost:8080/
+~~~
 
 
