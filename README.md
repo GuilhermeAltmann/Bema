@@ -21,6 +21,22 @@ REQUISITOS
 O minimo para se rodar esse projeto é PHP 7 e Composer. Mais informações https://getcomposer.org/.
 Testes realizados no MariaDB 10 e PHP 7.1.
 
+CONFIGURAÇÃO
+-------------
+
+### Banco de dados
+
+Editar o arquivo `config/db.php` para conectar com o banco de dados:
+
+```php
+return [
+    'class' => 'yii\db\Connection',
+    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
+    'username' => 'root',
+    'password' => '1234',
+    'charset' => 'utf8',
+];
+```
 
 INSTALAÇÃO
 ------------
@@ -48,19 +64,4 @@ http://localhost/[pasta-app]/web/
 ~~~
 
 
-CONFIGURAÇÃO
--------------
 
-### Banco de dados
-
-Editar o arquivo `config/db.php` para conectar com o banco de dados:
-
-```php
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
-    'username' => 'root',
-    'password' => '1234',
-    'charset' => 'utf8',
-];
-```
