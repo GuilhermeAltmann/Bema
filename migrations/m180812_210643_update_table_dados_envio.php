@@ -6,7 +6,7 @@ class m180812_210643_update_table_dados_envio extends Migration
 {
     public function up()
     {
-        $this->addColumn('{{%dados_envio}}', 'telefone', $this->string(11));
+        $this->addColumn('{{%dados_envio}}', 'telefone', $this->string(13));
     }
 
     public function down()

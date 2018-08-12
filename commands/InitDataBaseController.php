@@ -180,7 +180,15 @@ class InitDataBaseController extends Controller
         $dadosEnvio = new DadosEnvio();
         $dadosEnvio->cnpj = $this->faker->cnpj(false);
         $dadosEnvio->endereco = $this->faker->address;
-        $dadosEnvio->telefone = $this->faker->phoneNumber;
+        $dadosEnvio->telefone = preg_replace(
+            [
+                '/\-/',
+                '/\(/',
+                '/\)/',
+                '/\ /',
+            ],
+            "",
+            $this->faker->phoneNumber);
         $dadosEnvio->cep = $this->faker->postcode;
         $dadosEnvio->idestado = $this->pegarEstadoAleatorio()->idestado;
         $dadosEnvio->idpedido = $pedido->idpedido;

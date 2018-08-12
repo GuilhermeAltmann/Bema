@@ -91,7 +91,7 @@ $dataEmissaoNfe = \Yii::$app->formatter->asDate($pedido->data_hora_emissao_nfe, 
         <?php foreach ($pedido->historicosPedidos as $historico):?>
             <tr>
                 <td><?= \Yii::$app->formatter->asDate($historico->data_hora, 'php:d/m/Y H:i:s')?></td>
-                <td><?=$historico->status->descricao?></td>
+                <td><?= $historico->status->descricao ?></td>
             </tr>
         <?php endforeach;?>
         </table>
