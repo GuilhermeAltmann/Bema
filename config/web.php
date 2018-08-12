@@ -13,7 +13,6 @@ $config = [
     ],
     'components' => [
         'formatter' => [
-            'defaultTimeZone' => 'GMT+2',
             'decimalSeparator' => ','
        ],
         'request' => [
