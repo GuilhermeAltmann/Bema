@@ -67,7 +67,7 @@ class InitDataBaseController extends Controller
 
             $this->criarPedido($kit, 
                                 Status::find()
-                                ->where(['descricao' => $statuses[2]])
+                                ->where(['descricao' => $statuses[0]])
                                 ->one()
                             );
         }
@@ -126,10 +126,10 @@ class InitDataBaseController extends Controller
 
         Itens::deleteAll();
         DadosEnvio::deleteAll();
+        HistoricosPedido::deleteAll();
         Pedidos::deleteAll();
         Kits::deleteAll();
         Status::deleteAll();
-        HistoricosPedido::deleteAll();
         Estados::deleteAll();
         Paises::deleteAll();
     }
