@@ -24,4 +24,10 @@ class SiteController extends Controller
         $pedidos = Pedidos::find()->all();
         return $this->render('index', ['pedidos' => $pedidos]);
     }
+
+    public function actionDescricaocompleta()
+    {
+
+        return "lalalallala<br>asdsa";
+    }
 }
