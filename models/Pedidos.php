@@ -16,7 +16,7 @@ use Yii;
  * @property int $idstatus
  * @property int $idkit
  *
- * @property DadosEnvio[] $dadosEnvios
+ * @property DadosEnvio $dadosEnvios
  * @property HistoricosPedido[] $historicosPedidos
  * @property Kits $kit
  * @property Status $status
@@ -70,7 +70,7 @@ class Pedidos extends \yii\db\ActiveRecord
      */
     public function getDadosEnvios()
     {
-        return $this->hasMany(DadosEnvio::className(), ['idpedido' => 'idpedido']);
+        return $this->hasOne(DadosEnvio::className(), ['idpedido' => 'idpedido']);
     }
 
     /**

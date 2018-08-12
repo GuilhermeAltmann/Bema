@@ -12,6 +12,10 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'formatter' => [
+            'defaultTimeZone' => 'GMT+2',
+            'decimalSeparator' => ','
+       ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'LT-hvON8fqVEpPMZkqRIXgq0DjheOXKF',

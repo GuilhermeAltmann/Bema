@@ -24,43 +24,43 @@
         <table class="striped">
             <tr>
                 <td>Contrato de Licença</td>
-                <td>177.188.12.10</td>
+                <td><?=$pedido->contrato_licenca?> | <?=\Yii::$app->formatter->asDate($pedido->data_hora_criacao, 'php:d/m/Y H:i:s')?> | <a href="#">baixar</a></td>
             </tr>
             <tr>
                 <td>Status</td>
-                <td><span class="new badge orange" data-badge-caption="Em revisão"></span></td>
+                <td><span class="new badge orange" data-badge-caption="<?=$pedido->status->descricao?>"></span></td>
             </tr>
             <tr>
                 <td>Preço</td>
-                <td><b>R$ 251,00</b></td>
+                <td><b>R$ <?=\Yii::$app->formatter->asDecimal($pedido->preco)?></b></td>
             </tr>
             <tr>
                 <td>Data de Criação</td>
-                <td>12/04/2018</td>
+                <td><?=\Yii::$app->formatter->asDate($pedido->data_hora_criacao, 'php:d/m/Y')?></td>
             </tr>
             <tr>
                 <td>CNPJ para Envio</td>
-                <td>28433934000217</td>
+                <td><?=$pedido->dadosEnvios->cnpj?></td>
             </tr>
             <tr>
                 <td>Estado para Envio</td>
-                <td>Bahia</td>
+                <td><?=$pedido->dadosEnvios->estado->descricao?></td>
             </tr>
             <tr>
                 <td>Telefone para Envio</td>
-                <td>71 991850102</td>
+                <td><?=$pedido->dadosEnvios->cnpj?></td>
             </tr>
             <tr>
                 <td>CEP para Envio</td>
-                <td>40285885</td>
+                <td><?=$pedido->dadosEnvios->cep?></td>
             </tr>
             <tr>
                 <td>País para Envio</td>
-                <td>Brasil</td>
+                <td><?=$pedido->dadosEnvios->estado->pais->descricao?></td>
             </tr>
             <tr>
                 <td>Comentário do Pedido</td>
-                <td></td>
+                <td><?=$pedido->dadosEnvios->comentario?></td>
             </tr>
             <tr>
                 <td>Executivo de Vendas</td>
